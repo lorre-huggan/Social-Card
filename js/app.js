@@ -1,36 +1,74 @@
+const user = {
+  firstName: 'David',
+  lastName: 'Adjojo',
+  occupation: 'Software Developer',
+  useImg: 'https://uifaces.co/our-content/donated/LgPx_hOQ.jpg',
+  userBackground:
+    'https://images.unsplash.com/photo-1615150044410-3d9bb804959e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+  socials: [
+    {
+      id: 'fb',
+      service: 'Facebook',
+      url: 'https://www.facebook.com',
+      icon: 'fab fa-facebook-f',
+    },
+    {
+      id: 'ig',
+      service: 'Instagram',
+      url: 'https://www.instagram.com',
+      icon: 'fab fa-instagram',
+    },
+    {
+      id: 'gh',
+      service: 'GitHub',
+      url: 'https://www.github.com',
+      icon: 'fab fa-github-alt',
+    },
+  ],
+};
+
+let name = user.firstName + ' ' + user.lastName;
+
 let body = document.getElementsByTagName('body')[0];
 let root = document.createElement('div');
 let card = document.createElement('section');
 let style = document.createElement('style');
 let html = `  <div class="card__wrapper">
           <img
-            src="https://uifaces.co/our-content/donated/LgPx_hOQ.jpg"
+            src="${user.useImg}"
             alt="my-face"
             class="card__user-img"
           />
           <div class="card__info">
-            <span class="card__name">David Ajojo</span>
-            <span class="card__title">Web Developer</span>
+            <span class="card__name">${name}</span>
+            <span class="card__title">${user.occupation}</span>
           </div>
           <div class="card__socials">
-            <div class="card__icon card__icon--fb">
+          
+          <a href="${user.socials[0].url}">
+          <div class="card__icon card__icon--fb">
               <span class="card__icon-box">
                 <i class="fab fa-facebook-f"></i>
               </span>
-              <span class="card__icon--title">Facebook</span>
+              <span class="card__icon--title">${user.socials[0].service}</span>
             </div>
+          </a>
+            <a href="${user.socials[1].url}">
             <div class="card__icon card__icon--ig">
               <span class="card__icon-box">
                 <i class="fab fa-instagram"></i>
               </span>
-              <span class="card__icon--title">Instagram</span>
+              <span class="card__icon--title">${user.socials[1].service}</span>
             </div>
+            </a>
+            <a href="${user.socials[2].url}">
             <div class="card__icon card__icon--gh">
               <span class="card__icon-box">
                 <i class="fab fa-github-alt"></i>
               </span>
-              <span class="card__icon--title">GitHub</span>
+              <span class="card__icon--title">${user.socials[2].service}</span>
             </div>
+            </a>
           </div>
         </div>`;
 let cssStyles = `
@@ -173,9 +211,9 @@ table {
 }
 
 .card__wrapper {
-  height: 400px;
+  height: 500px;
   padding: 20px;
-  max-width: 300px;
+  max-width: 370px;
   width: 100%;
   border-radius: 10px;
   background: white;
@@ -187,9 +225,9 @@ table {
 
 .card__user-img {
   border: 2px solid #636363;
-  height: 70px;
-  width: 70px;
-  margin: 1.5rem auto 1.5rem auto;
+  height: 120px;
+  width: 120px;
+  margin: 3rem auto 1.5rem auto;
   border-radius: 50%;
   object-fit: cover;
   object-position: center 1px;
@@ -286,12 +324,15 @@ table {
   color: white;
   transform: scale(1.03);
 }
+a {
+    text-decoration: none
+}
 `;
 
 root.classList.add('root');
 body.prepend(root);
 root.style.cssText = `
-background: url('https://images.unsplash.com/photo-1500817904307-e664893dcbab?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+background: url('${user.userBackground}');
 background-size: cover;
 background-position: center;
 `;
