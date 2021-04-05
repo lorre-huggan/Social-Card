@@ -2,7 +2,7 @@ const user = {
   firstName: 'David',
   lastName: 'Adjojo',
   occupation: 'Software Developer',
-  useImg: 'https://uifaces.co/our-content/donated/LgPx_hOQ.jpg',
+  userImg: 'https://uifaces.co/our-content/donated/LgPx_hOQ.jpg',
   userBackground:
     'https://images.unsplash.com/photo-1615150044410-3d9bb804959e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
   socials: [
@@ -24,18 +24,24 @@ const user = {
       url: 'https://www.github.com',
       icon: 'fab fa-github-alt',
     },
+    {
+      id: 'db',
+      service: 'Dribble',
+      url: 'https://www.dribbble.com',
+      icon: 'fab fa-dribbble',
+    },
   ],
 };
 
-let name = user.firstName + ' ' + user.lastName;
-
-let body = document.getElementsByTagName('body')[0];
-let root = document.createElement('div');
-let card = document.createElement('section');
-let style = document.createElement('style');
-let html = `  <div class="card__wrapper">
+let cardApp = (user) => {
+  let body = document.getElementsByTagName('body')[0];
+  let root = document.createElement('div');
+  let card = document.createElement('section');
+  let style = document.createElement('style');
+  let name = user.firstName + ' ' + user.lastName;
+  let html = `  <div class="card__wrapper">
           <img
-            src="${user.useImg}"
+            src="${user.userImg}"
             alt="my-face"
             class="card__user-img"
           />
@@ -44,34 +50,9 @@ let html = `  <div class="card__wrapper">
             <span class="card__title">${user.occupation}</span>
           </div>
           <div class="card__socials">
-          
-          <a href="${user.socials[0].url}">
-          <div class="card__icon card__icon--fb">
-              <span class="card__icon-box">
-                <i class="fab fa-facebook-f"></i>
-              </span>
-              <span class="card__icon--title">${user.socials[0].service}</span>
-            </div>
-          </a>
-            <a href="${user.socials[1].url}">
-            <div class="card__icon card__icon--ig">
-              <span class="card__icon-box">
-                <i class="fab fa-instagram"></i>
-              </span>
-              <span class="card__icon--title">${user.socials[1].service}</span>
-            </div>
-            </a>
-            <a href="${user.socials[2].url}">
-            <div class="card__icon card__icon--gh">
-              <span class="card__icon-box">
-                <i class="fab fa-github-alt"></i>
-              </span>
-              <span class="card__icon--title">${user.socials[2].service}</span>
-            </div>
-            </a>
           </div>
         </div>`;
-let cssStyles = `
+  let cssStyles = `
 html,
 body,
 div,
@@ -224,18 +205,23 @@ table {
 }
 
 .card__user-img {
-  border: 2px solid #636363;
+  border: 3px solid #636363;
   height: 120px;
   width: 120px;
   margin: 3rem auto 1.5rem auto;
   border-radius: 50%;
   object-fit: cover;
   object-position: center 1px;
+  
   transition: all 0.5s ease-in-out;
+  
 }
 
 .card__user-img:hover {
   transform: scale(1.2);
+  border: 6px solid #3e5d95;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.52);
+  
 }
 
 .card__info {
@@ -298,7 +284,7 @@ table {
 .card__icon--fb:hover {
   background: #3e5d95;
   color: white;
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .card__icon--ig {
@@ -310,7 +296,7 @@ table {
 .card__icon--ig:hover {
   background: #dd2a7b;
   color: white;
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .card__icon--gh {
@@ -322,25 +308,59 @@ table {
 .card__icon--gh:hover {
   background: #383838;
   color: white;
-  transform: scale(1.03);
+  transform: scale(1.05);
+}
+
+.card__icon--db {
+  color: #d00000;
+  border: 1px solid #d00000;
+  transition: all 0.5s ease;
+}
+
+.card__icon--db:hover {
+  background: #d00000;
+  color: white;
+  transform: scale(1.05);
 }
 a {
-    text-decoration: none
+    text-decoration: none;
+    
 }
+// a:visited{
+//     color: black;
+// }
 `;
 
-root.classList.add('root');
-body.prepend(root);
-root.style.cssText = `
+  root.classList.add('root');
+  body.prepend(root);
+  root.style.cssText = `
 background: url('${user.userBackground}');
 background-size: cover;
 background-position: center;
 `;
+  root.prepend(card);
+  root.append(style);
 
-card.classList.add('card');
-root.prepend(card);
+  card.classList.add('card');
+  style.prepend(cssStyles);
+  document.getElementsByClassName('card')[0].innerHTML = html;
 
-root.append(style);
-style.prepend(cssStyles);
+  let cardSocials = card.getElementsByClassName('card__socials')[0];
 
-document.getElementsByClassName('card')[0].innerHTML = html;
+  user.socials.forEach((item, index) => {
+    let tempNode = document.createElement('a');
+    tempNode.classList.add('card__icon', `card__icon--${item.id}`);
+    tempNode.href = `${item.url}`;
+    tempNode.innerHTML = `
+            
+              <span class="card__icon-box">
+                <i class="${item.icon}"></i>
+              </span>
+              <span class="card__icon--title">${item.service}</span>
+            `;
+
+    cardSocials.append(tempNode);
+  });
+};
+
+cardApp(user);
