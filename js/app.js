@@ -347,10 +347,11 @@ background-position: center;
 
   let cardSocials = card.getElementsByClassName('card__socials')[0];
 
-  user.socials.forEach((item, index) => {
+  user.socials.forEach((item) => {
     let tempNode = document.createElement('a');
-    tempNode.classList.add('card__icon', `card__icon--${item.id}`);
     tempNode.href = `${item.url}`;
+    tempNode.classList.add('card__icon', `card__icon--${item.id}`);
+
     tempNode.innerHTML = `
             
               <span class="card__icon-box">
